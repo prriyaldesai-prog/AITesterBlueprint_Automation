@@ -1,0 +1,66 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e5]:
+      - generic [ref=e7]:
+        - img [ref=e8]
+        - generic [ref=e9]: Salesforce login
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]: "Error: Please check your username and password. If you still can't log in, contact your Salesforce administrator."
+          - heading "Salesforce login" [level=1] [ref=e14]
+          - generic [ref=e15]:
+            - text: Username
+            - textbox "Username" [active] [ref=e17]
+          - text: Password
+          - textbox "Password" [ref=e18]
+          - button "Log In" [ref=e19] [cursor=pointer]
+          - generic [ref=e20]:
+            - checkbox "Remember me" [ref=e21]
+            - generic [ref=e22]: Remember me
+        - generic [ref=e23]:
+          - link "Forgot Your Password?" [ref=e24] [cursor=pointer]:
+            - /url: /secur/forgotpassword.jsp?locale=in&lqs=locale%3Din
+          - link "Use Custom Domain" [ref=e25] [cursor=pointer]:
+            - /url: javascript:void(0);
+        - generic [ref=e26]: or
+        - link "Log In with Email" [ref=e27] [cursor=pointer]:
+          - /url: https://welcome.salesforce.com?ref=lsc
+      - generic [ref=e28]:
+        - paragraph [ref=e29]: Not a customer?
+        - link "Try for Free" [ref=e30] [cursor=pointer]:
+          - /url: https://www.salesforce.com/in/form/trial/freetrial.jsp?d=70130000000Enyk
+    - generic [ref=e31]:
+      - text: © 2026 Salesforce, Inc. All rights reserved. |
+      - link "Privacy" [ref=e32] [cursor=pointer]:
+        - /url: https://www.salesforce.com/in/company/privacy
+  - iframe [ref=e34]:
+    - generic [active] [ref=f5e1]:
+      - generic [ref=f5e2]:
+        - main [ref=f5e3]:
+          - generic [ref=f5e4]:
+            - generic [ref=f5e5]:
+              - generic [ref=f5e6]:
+                - article [ref=f5e7]:
+                  - generic [ref=f5e9]:
+                    - generic [ref=f5e10]:
+                      - heading "Introducing Slack CRM for Growing Indian Businesses" [level=2] [ref=f5e11]:
+                        - text: Introducing Slack CRM for
+                        - strong [ref=f5e12]: Growing Indian Businesses
+                      - strong [ref=f5e13]:
+                        - paragraph [ref=f5e15]: Powered by the all-new, intelligent Slackbot
+                    - strong [ref=f5e16]:
+                      - 'link "Know more: Introducing Slack CRM for Growing Indian Businesses" [ref=f5e19] [cursor=pointer]':
+                        - /url: https://www.salesforce.com/in/slack/contact/slack-crm/?d=pb
+                        - text: Know more
+                        - img [ref=f5e20]
+                  - strong
+                - strong
+              - strong:
+                - img [ref=f5e25]
+            - strong
+          - strong
+        - strong
+      - strong
+  - generic: Login
+  - iframe [ref=e35]:
+    
