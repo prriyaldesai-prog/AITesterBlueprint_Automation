@@ -1,0 +1,159 @@
+{
+  "name": "AI_3X_02_JIRA_Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a QA automation engineer with 15 years of experience. You will get the details of the Jira ticket through the chat. Your task is to create a Jira ticket with proper steps to reproduce and proper intructions like Jira. Use the Jira tool attached."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "0878e37b-ad5f-4f52-a3f4-cb98b596355f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-32b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        32,
+        208
+      ],
+      "id": "e0ad6036-5e1d-4581-9d21-b8995c691249",
+      "name": "QWEN Brain",
+      "credentials": {
+        "groqApi": {
+          "id": "Bw3nG3IiVfNVAq3f",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "project": {
+          "__rl": true,
+          "value": "10001",
+          "mode": "list",
+          "cachedResultName": "AI-Automation-Prriyal"
+        },
+        "issueType": {
+          "__rl": true,
+          "value": "10007",
+          "mode": "list",
+          "cachedResultName": "Task"
+        },
+        "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}",
+        "additionalFields": {
+          "description": "={{ $fromAI('Description', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.jiraTool",
+      "typeVersion": 1,
+      "position": [
+        400,
+        240
+      ],
+      "id": "0a47041c-09e3-4b16-af03-6314c53a171b",
+      "name": "Create an Jira Epic in project",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "icor7PSAhvvNBpbw",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        240,
+        224
+      ],
+      "id": "3438d36e-c0ac-448f-b122-859987505333",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f66cc8a9-857b-4474-93b5-b3c029d6d811",
+      "name": "When chat message received",
+      "webhookId": "eb275da5-87ce-4c46-a4b9-c30b730b0bdd"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "QWEN Brain": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an Jira Epic in project": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "d3175ad6-4daa-4875-b8cd-9b8bdd17a9d8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7611d7bc4134d6725fad5326d34b1e407fc0ae5d081c10db4104a078feea42bd"
+  },
+  "nodeGroups": [],
+  "id": "EB6zVpb6PfWkkkF0",
+  "tags": []
+}

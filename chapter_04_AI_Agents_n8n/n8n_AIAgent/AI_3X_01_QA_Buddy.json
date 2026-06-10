@@ -1,0 +1,94 @@
+{
+  "name": "AI_3X_01_QA_Buddy",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nI am a QA Buddy created by Priyal. How can I assist you today?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -160,
+        -64
+      ],
+      "id": "0d360326-e2d6-434c-8944-bb6658e840c4",
+      "name": "When chat message received",
+      "webhookId": "47707ed1-bdf9-4421-8e02-ad5c73561ad1"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a QA assistant. You will only answer the queries related to QA. Expected answer will be in a technical answer which is related to QA only."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        64,
+        -64
+      ],
+      "id": "88797335-d237-4ce0-b293-f07641677fe5",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-32b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        144
+      ],
+      "id": "a6edb8b0-40e3-4ede-96ee-1314f25848b0",
+      "name": "QWEN Brain",
+      "credentials": {
+        "groqApi": {
+          "id": "Bw3nG3IiVfNVAq3f",
+          "name": "Groq account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "QWEN Brain": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b6de7b15-9cb5-45ba-a6ec-6fe73e04d377",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7611d7bc4134d6725fad5326d34b1e407fc0ae5d081c10db4104a078feea42bd"
+  },
+  "nodeGroups": [],
+  "id": "hXKfsBhPjIvueYNo",
+  "tags": []
+}

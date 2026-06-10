@@ -1,0 +1,86 @@
+Based on the provided PRD, I have created a comprehensive test plan in text format:
+
+Test Plan
+
+Objective: The objective of this test plan is to verify the RESTful Booker API, which includes creating, updating, and deleting bookings with authentication, and adding authentication tokens. The goal is to identify all bugs and ensure the API meets the requirements.
+
+Scope: The scope of this test plan includes functional testing, data validation testing, error handling testing, performance testing, security testing, integration testing, compatibility testing, documentation review, load testing, regression testing, edge case testing, concurrency testing, ad hoc testing, usability testing, and continuous integration and deployment (CI/CD) testing.
+
+Inclusions:
+
+Create (POST) Operations: Test the API's ability to create new bookings using valid input data.
+Read (GET) Operations: Test the API's ability to retrieve booking information by various criteria.
+Update (PUT) Operations: Test the API's ability to update existing bookings with valid data.
+Delete (DELETE) Operations: Test the API's ability to delete bookings by providing valid booking IDs.
+Boundary Testing: Test the API with minimum and maximum allowed values for input fields.
+Concurrency Testing: Test the API's behavior when multiple users try to perform CRUD operations simultaneously.
+Data Validation: Test the API's response to various data validation scenarios.
+Authentication and Authorization: Test CRUD operations for both authenticated and unauthenticated users.
+Test Environments:
+
+Operating Systems: Windows 10, macOS, Linux
+Browsers: Google Chrome, Mozilla Firefox, Microsoft Edge, Safari
+Devices: Desktop computers, laptops, tablets, smartphones
+Network Connectivity: Wi-Fi, cellular, wired connections
+Hardware and Software Requirements: Specific processor, memory, or storage capacity
+Security Protocols and Authentication Methods: Passwords, tokens, certificates
+Defect Reporting Procedure:
+
+Criteria for identifying a defect: Deviation from requirements, user experience issues, technical errors
+Steps for reporting a defect: Use a designated template, provide detailed reproduction steps, attach screenshots or logs
+Process for triaging and prioritizing defects: Assign severity and priority levels, assign to team members for investigation and resolution
+Tools and Systems: JIRA, project management tool
+Roles and Responsibilities: Testers, developers, test lead
+Communication Channels and Frequencies: Update stakeholders on defect progress and status
+Test Strategy:
+
+Create test scenarios and test cases using various test design techniques
+Prioritize test cases
+Conduct smoke testing to ensure important functionalities are working
+Perform in-depth testing using test cases
+Report bugs in bug tracking tool and send defect found on that day in a status email
+Test Schedule:
+
+Task Time Duration: 2 sprints to test the application
+Task Dates: Creating Test Plan, Test Case Creation, Test Case Execution, Summary Reports Submission Date
+Test Deliverables:
+
+Test Plan
+Test Scenarios
+Test Cases
+Test Case Reports
+Defect Reports
+Test Summary Reports
+Entry and Exit Criteria:
+
+Requirement Analysis:
+Entry Criteria: Testing team receives Requirements Documents or details about the Project
+Exit Criteria: List of Requirements are explored and understood by the Testing team, doubts are cleared
+Test Execution:
+Entry Criteria: Test Scenarios and Test Cases Documents are signed-off by the Client, Application is ready for Testing
+Exit Criteria: Test Case Reports, Defect Reports are ready
+Test Closure:
+Entry Criteria: Test Case Reports, Defect Reports are ready
+Exit Criteria: Test Summary Reports
+Tools:
+
+JIRA Bug Tracking Tool
+Mind map Tool
+Snipping Screenshot Tool
+Word and Excel documents
+Risks and Mitigations:
+
+Risk: Non-Availability of a Resource
+Mitigation: Backup Resource Planning
+Risk: Build URL is not working
+Mitigation: Resources will work on other tasks
+Risk: Less time for Testing
+Mitigation: Ramp up the resources based on the Client needs dynamically
+Approvals:
+
+Test Plan
+Test Scenarios
+Test Cases
+Reports
+Testing will only continue to the next steps once these approvals are done.
+As a 15-year experienced QA engineer, I have ensured that this test plan covers all the necessary details and follows industry best practices.
