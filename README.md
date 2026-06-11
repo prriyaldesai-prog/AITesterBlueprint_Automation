@@ -38,6 +38,9 @@ Each chapter pairs concept material with a hands-on project, a prompt template, 
         ├── 04_Negative_TC_Only.md
         ├── 05_Secuirty_Test.md
         └── 06_Regression_Suite.md
+├── chapter_03_BLAST_FW/           B.L.A.S.T Framework for test scenarios
+├── chapter_03_BLAST_FW_2_TestCase/ B.L.A.S.T Framework for test cases
+└── chapter_04_AI_Agents_n8n/      AI Agents built with n8n
 ```
 
 ---
@@ -130,6 +133,25 @@ Six copy-paste prompt templates for the most common QA tasks. Each follows the *
 1. Open the file and copy the fenced block.
 2. Replace `[FEATURE]` / `[PASTE REQUIREMENTS]` / `[PASTE PRD]` etc. with your input.
 3. Paste into your AI tool. Keep the `CONSTRAINTS` block intact — that's what stops hallucination.
+
+---
+
+## Chapter 03 — B.L.A.S.T Framework
+
+This chapter introduces the B.L.A.S.T framework for generating comprehensive test artifacts.
+
+**What's here:**
+- `chapter_03_BLAST_FW/` — Focuses on generating high-level test scenarios using the framework.
+- `chapter_03_BLAST_FW_2_TestCase/` — Extends the framework to generate detailed test cases and test plans.
+
+---
+
+## Chapter 04 — AI Agents with n8n
+
+Explores the creation and deployment of AI Agents using n8n for workflow automation in testing.
+
+**What's here:**
+- `chapter_04_AI_Agents_n8n/` — Examples and configurations for n8n AI Agents.
 
 ---
 
