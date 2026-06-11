@@ -1,0 +1,484 @@
+{
+  "name": "AI_3X_04_Read_PRD_TestCases_Excel_GDrive_v2",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "Objective\nUpload a CSV file with JIRA IDs. For each ID, the AI agent fetches the requirement from Jira and generates detailed test cases in Google Sheets.\n\nRate Limit Fixes\n• Switched to llama-3.3-70b-versatile (higher rate limits)\n• Increased wait time to 60 seconds between requests\n• Simplified Jira output to reduce token usage\n\nNote: The 60-second delay ensures compliance with Groq rate limits. Each JIRA ID processes sequentially.",
+        "height": 320,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -304,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "d7ef745d-c739-4a36-9b7e-06381e85ee06",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate detailed test cases for JIRA ID: {{ $json.jiraId }}",
+        "options": {
+          "systemMessage": "Act as a 15 years experienced automation engineer to create testcases. Fetch the requirement from Jira and generate proper detailed testcases in the Google Sheets file."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1392,
+        176
+      ],
+      "id": "5c27686f-803f-4a25-a25a-e2c122712714",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "issueKey": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Issue_Key', ``, 'string') }}",
+        "simplifyOutput": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.jiraTool",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        400
+      ],
+      "id": "ab4276c3-fe57-4358-b96b-0ee2ac096a78",
+      "name": "Fetch PRD by Ticket ID",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "icor7PSAhvvNBpbw",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        400
+      ],
+      "id": "c789b734-c52f-4dd4-b5bf-a9b0f9f23342",
+      "name": "Brain",
+      "credentials": {
+        "groqApi": {
+          "id": "Bw3nG3IiVfNVAq3f",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1Vcr6W244UanKWKWrY_V_ujlvQH8QhlfeX16e6rDYUGU",
+          "mode": "list",
+          "cachedResultName": "PRD Testcases using n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Vcr6W244UanKWKWrY_V_ujlvQH8QhlfeX16e6rDYUGU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1238754900,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Vcr6W244UanKWKWrY_V_ujlvQH8QhlfeX16e6rDYUGU/edit#gid=1238754900"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "TestCase ID": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('TestCase_ID__using_to_match_', ``, 'string') }}",
+            "Summary/Title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary_Title', ``, 'string') }}",
+            "Preconditions": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Preconditions', ``, 'string') }}",
+            "Test Steps": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Test_Steps', ``, 'string') }}",
+            "Expected Result": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Expected_Result', ``, 'string') }}",
+            "Actual Result": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Actual_Result', ``, 'string') }}",
+            "Status": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Status', ``, 'string') }}",
+            "Priority": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Priority', ``, 'string') }}",
+            "Assignee": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Assignee', ``, 'string') }}",
+            "Execution Date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Execution_Date', ``, 'string') }}",
+            "Comments/Notes": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Comments_Notes', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "TestCase ID"
+          ],
+          "schema": [
+            {
+              "id": "TestCase ID",
+              "displayName": "TestCase ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Summary/Title",
+              "displayName": "Summary/Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Preconditions",
+              "displayName": "Preconditions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Test Steps",
+              "displayName": "Test Steps",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Expected Result",
+              "displayName": "Expected Result",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Actual Result",
+              "displayName": "Actual Result",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Assignee",
+              "displayName": "Assignee",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Execution Date",
+              "displayName": "Execution Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Comments/Notes",
+              "displayName": "Comments/Notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        1584,
+        400
+      ],
+      "id": "0c33b458-8459-4ae2-b845-c961ce5e7193",
+      "name": "Append or update row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Vf2bSV4VVKaFHzgD",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Upload JIRA IDs for Test Case Generation",
+        "formDescription": "Upload a CSV file containing JIRA IDs. The workflow will generate test cases for each ID.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "CSV File with JIRA IDs",
+              "fieldType": "file",
+              "fieldName": "csvFile",
+              "multipleFiles": false,
+              "acceptFileTypes": ".csv",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "Generate Test Cases",
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "Your CSV has been received. Test cases are being generated..."
+            }
+          }
+        }
+      },
+      "id": "64d29741-7e95-4151-b8ba-41be9785a4c9",
+      "name": "When Form Submitted",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        208,
+        192
+      ],
+      "webhookId": "983e3d9b-718d-4334-8fb8-1e96cc45cd52"
+    },
+    {
+      "parameters": {
+        "binaryPropertyName": "csvFile",
+        "options": {
+          "headerRow": true,
+          "includeEmptyCells": false
+        }
+      },
+      "id": "239f831c-86a1-41ce-bdfc-1c929234d111",
+      "name": "Extract CSV",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        432,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "message",
+              "value": "All test cases generated successfully",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3eec1427-0244-4294-8310-0087c3beae21",
+      "name": "Finalize",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1104,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "7bf70ad4-84f7-40bd-b57e-99ff4daa8214",
+      "name": "Loop Over JIRA IDs",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        880,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "jiraId",
+              "value": "={{ Object.values($json)[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2490a37c-3229-4f96-ba73-bae8a1f327a3",
+      "name": "Extract JIRA ID",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        656,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "id": "b68fc358-9d0b-47ad-907b-09bb74223d11",
+      "name": "Wait Between Requests",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1104,
+        0
+      ],
+      "webhookId": "b137addb-1978-442a-b156-71f97d67dfb6"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Fetch PRD by Ticket ID": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brain": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Form Submitted": {
+      "main": [
+        [
+          {
+            "node": "Extract CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract CSV": {
+      "main": [
+        [
+          {
+            "node": "Extract JIRA ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Loop Over JIRA IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over JIRA IDs": {
+      "main": [
+        [
+          {
+            "node": "Finalize",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait Between Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract JIRA ID": {
+      "main": [
+        [
+          {
+            "node": "Loop Over JIRA IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait Between Requests": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "39813036-fffc-4999-bc04-458b4180ec7c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7611d7bc4134d6725fad5326d34b1e407fc0ae5d081c10db4104a078feea42bd"
+  },
+  "nodeGroups": [],
+  "id": "3g9fuW4YgxvQqx1b",
+  "tags": []
+}
