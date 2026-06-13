@@ -1,0 +1,453 @@
+{
+  "name": "AI_3X_05_PRD_STLC",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "Objective\nUpload PRD file in .pdf format :\nGenerate STLC - Test plan in .md file\nTest cases in .csv file\nPlaywright testcases in .md file.\n\n",
+        "height": 128,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "49e5cdc5-2aab-495e-b24c-a5f5d245e607",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "formTitle": "Upload PRD document for STLC",
+        "formDescription": "Upload PRD document with all details, the workflow will generate the entire STLC workflow.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "PDF file with PRD",
+              "fieldType": "file",
+              "fieldName": "pdfFile",
+              "multipleFiles": false,
+              "acceptFileTypes": ".pdf",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        192,
+        208
+      ],
+      "id": "8e473a80-6d40-475f-9824-fdea55c9083b",
+      "name": "PRD Document upload",
+      "webhookId": "8f3c544f-8211-4419-ba70-c0a9150ec3ad"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "pdfFile",
+        "options": {}
+      },
+      "id": "96134283-35cb-449a-9ae6-964e1f4b18e2",
+      "name": "Extract from .pdf file",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "model": "llama-3.1-8b-instant",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        720,
+        432
+      ],
+      "id": "e26b5acb-357c-4834-b331-5f56c471a2ef",
+      "name": "Whisper",
+      "credentials": {
+        "groqApi": {
+          "id": "U575nY5sf5dLl5Ko",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "Testplan_n8n_output.md",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1quIDUXJS-1KkWspRq0GxOp5wnSbg1QxO",
+          "mode": "list",
+          "cachedResultName": "STLC_n8n_output",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1quIDUXJS-1KkWspRq0GxOp5wnSbg1QxO"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1344,
+        64
+      ],
+      "id": "4450e2c9-9adf-4a99-b75f-9f3e4b1ce940",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "NOP4koFI9J5Zombu",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "output",
+        "options": {
+          "fileName": "Testplan_n8n_output.md"
+        }
+      },
+      "id": "547c004a-58f7-46ad-aa23-9c5aaff7d4b7",
+      "name": "Convert to File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1056,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate a detailed test plan from the following PRD document:\n\n{{ $json.text }}\n\nCreate a comprehensive test plan in markdown format that includes:\n- Test objectives\n- Scope and requirements\n- Test strategy\n- Test cases with scenarios\n- Edge cases and boundary conditions\n- Risk analysis",
+        "options": {
+          "systemMessage": "You are a senior QA analyst with 15+ years of experience. Your job is to analyze PRD documents and create detailed test plans. You identify functional requirements, acceptance criteria, edge cases, boundary conditions, and risks. Generate comprehensive test documentation in markdown format."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        640,
+        208
+      ],
+      "id": "c539b006-ba52-46be-845d-4839e2e47a4e",
+      "name": "Generate TestPlan"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1SicKS4lY6RAGzyS1upJaCAtLLwPDgxn2zes9cUrfnfk",
+          "mode": "list",
+          "cachedResultName": "Testcases_n8n_output.csv",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SicKS4lY6RAGzyS1upJaCAtLLwPDgxn2zes9cUrfnfk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SicKS4lY6RAGzyS1upJaCAtLLwPDgxn2zes9cUrfnfk/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "schema": [
+            {
+              "id": "TestCase ID",
+              "displayName": "TestCase ID",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Summary/Title",
+              "displayName": "Summary/Title",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Preconditions",
+              "displayName": "Preconditions",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Test Steps",
+              "displayName": "Test Steps",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Expected Result",
+              "displayName": "Expected Result",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Actual Result",
+              "displayName": "Actual Result",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Assignee",
+              "displayName": "Assignee",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Execution Date",
+              "displayName": "Execution Date",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Comments/Notes",
+              "displayName": "Comments/Notes",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1568,
+        368
+      ],
+      "id": "c09743dd-61eb-46c6-b802-7f6995232c54",
+      "name": "Generate Test cases",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pl0buMWW9K6R0Lqt",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "llama-3.1-8b-instant",
+        "options": {}
+      },
+      "id": "3a8ce833-cbb2-4552-a757-8ffe28f91506",
+      "name": "Test Case Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        592
+      ],
+      "credentials": {
+        "groqApi": {
+          "id": "U575nY5sf5dLl5Ko",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = $input.first().json.output;\nconst testCases = [];\nconst blocks = output.split(/\\*\\*TestCase \\d+:/g).filter(b => b.trim());\n\nblocks.forEach((block, index) => {\n  const lines = block.split(\"\\n\").filter(l => l.trim());\n  const tc = {\n    \"TestCase ID\": \"\",\n    \"Summary/Title\": \"\",\n    \"Preconditions\": \"\",\n    \"Test Steps\": \"\",\n    \"Expected Result\": \"\",\n    \"Actual Result\": \"\",\n    \"Status\": \"Not Executed\",\n    \"Priority\": \"\",\n    \"Assignee\": \"\",\n    \"Execution Date\": \"\",\n    \"Comments/Notes\": \"\"\n  };\n  \n  let currentField = \"\";\n  \n  lines.forEach(line => {\n    if (line.startsWith(\"TC ID:\")) {\n      tc[\"TestCase ID\"] = line.replace(\"TC ID:\", \"\").trim();\n    } else if (line.startsWith(\"Title:\")) {\n      tc[\"Summary/Title\"] = line.replace(\"Title:\", \"\").trim();\n    } else if (line.startsWith(\"Preconditions:\")) {\n      currentField = \"Preconditions\";\n      tc[\"Preconditions\"] = line.replace(\"Preconditions:\", \"\").trim();\n    } else if (line.startsWith(\"Test Steps:\")) {\n      currentField = \"Test Steps\";\n      tc[\"Test Steps\"] = line.replace(\"Test Steps:\", \"\").trim();\n    } else if (line.startsWith(\"Expected Result:\") || line.startsWith(\"Expected Results:\")) {\n      currentField = \"Expected Result\";\n      tc[\"Expected Result\"] = line.replace(/Expected Results?:/, \"\").trim();\n    } else if (line.startsWith(\"Priority:\")) {\n      tc[\"Priority\"] = line.replace(\"Priority:\", \"\").trim();\n      currentField = \"\";\n    } else if (currentField && line.trim().startsWith(\"-\")) {\n      tc[currentField] += \"\\n\" + line.trim();\n    } else if (currentField && line.trim()) {\n      tc[currentField] += \" \" + line.trim();\n    }\n  });\n  \n  if (tc[\"TestCase ID\"]) {\n    testCases.push(tc);\n  }\n});\n\nreturn testCases.map(tc => ({ json: tc }));"
+      },
+      "id": "f47cacc7-88f4-48cc-a91a-ccb5e3306c71",
+      "name": "Parse Test Cases",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Based on the following test plan, generate detailed test cases for the VWO platform:\n\n{{ $json.output }}\n\nGenerate test cases in a structured format with the following fields for each test case:\n\n**TestCase [number]:**\nTC ID: [unique identifier]\nTitle: [clear test case title]\nPreconditions: [what must be true before testing]\nTest Steps: [numbered steps]\nExpected Result: [what should happen]\nPriority: [High/Medium/Low]\n\nFocus on login functionality, dashboard access, and key features mentioned in the test plan.",
+        "options": {
+          "systemMessage": "You are a QA engineer who specializes in test case design. You write test cases that are so clear and detailed that anyone — even a junior tester — can execute them without asking questions. Each test case includes: TC ID, Title, Preconditions, Step-by-step instructions, Expected Results, Test Data, and Priority. You always cover: happy path, negative scenarios, edge cases, boundary values, UI validations, and error handling."
+        }
+      },
+      "id": "922f91ab-a27d-4586-beca-e7312290bcf0",
+      "name": "Generate Test Cases",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        992,
+        368
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "PRD Document upload": {
+      "main": [
+        [
+          {
+            "node": "Extract from .pdf file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from .pdf file": {
+      "main": [
+        [
+          {
+            "node": "Generate TestPlan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Whisper": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate TestPlan",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate TestPlan": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Generate Test Cases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Case Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate Test Cases",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Test Cases": {
+      "main": [
+        [
+          {
+            "node": "Generate Test cases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Test Cases": {
+      "main": [
+        [
+          {
+            "node": "Parse Test Cases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "f897c6e6-5fcc-4981-9586-8dfbb390fb6e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e7b9e6ff6f1eb130bb77a21266ead4cc76def1eb48451c7d202d2f62ae6360f7"
+  },
+  "nodeGroups": [],
+  "id": "kIlAyWiLNDQCP22p",
+  "tags": []
+}
